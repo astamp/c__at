@@ -1,11 +1,14 @@
 #include <stdio.h>
 
 #include "cpu.h"
+#include "log.h"
 
 int main(int argc, char** argv) {
     (void)argc;
     (void)argv;
-    printf("C/AT version 0.0.1\r\n");
+    SetLevel(LOG_INFO);
+    SetZones(ZONE_ALL);
+    LogInfo(ZONE_MAIN, "C/AT version 0.0.1\r\n");
     
     Registers_t regs;
     regs.AX = 0xCAFE;
