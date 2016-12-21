@@ -40,6 +40,19 @@ typedef struct {
     uint16_t SS;
 } Registers_t;
 
+#define FLAGS_CARRY     (0x0001)
+#define FLAGS_PARITY    (0x0004)
+
+typedef union {
+    uint16_t value;
+    struct {
+        unsigned carry:1;
+        unsigned reserved1:1;
+        unsigned parity:1;
+        unsigned reserved2:1;
+    };
+} Flags_t;
+
 void cpu_initialize_registers(Registers_t* regs);
 
 #endif // __CPU_H__

@@ -22,6 +22,7 @@ add_executable(c__at main.c ${SOURCES})
 
 # Test sources.
 set(UT_SOURCES
+    unittests/Flags_tTests.cpp
     unittests/Registers_tTests.cpp
 )
 
