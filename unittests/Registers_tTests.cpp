@@ -1,7 +1,8 @@
 #include "CppUTest/TestHarness.h"
 
-#include "cpu.h"
-#include <stdio.h>
+extern "C" {
+    #include "cpu.h"
+}
 
 TEST_GROUP(Registers_tTests)
 {
