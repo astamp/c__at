@@ -40,4 +40,6 @@ typedef struct {
     uint16_t SS;
 } Registers_t;
 
+void cpu_initialize_registers(Registers_t* regs);
+
 #endif // __CPU_H__

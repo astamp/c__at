@@ -140,3 +140,26 @@ TEST(Registers_tTests, assignment_masks_to_16_bits)
     LONGS_EQUAL(49664, regs.AX);
 }
 
+TEST(Registers_tTests, cpu_initialize_registers)
+{
+    Registers_t regs;
+    cpu_initialize_registers(&regs);
+    LONGS_EQUAL(0, regs.AX);
+    LONGS_EQUAL(0, regs.BX);
+    LONGS_EQUAL(0, regs.CX);
+    LONGS_EQUAL(0, regs.DX);
+    LONGS_EQUAL(0, regs.IP);
+    LONGS_EQUAL(0, regs.BP);
+    LONGS_EQUAL(0, regs.SI);
+    LONGS_EQUAL(0, regs.DI);
+    LONGS_EQUAL(0xFFFF, regs.CS);
+    LONGS_EQUAL(0, regs.DS);
+    LONGS_EQUAL(0, regs.ES);
+    LONGS_EQUAL(0, regs.SS);
+}
+
+TEST(Registers_tTests, cpu_initialize_registers_null)
+{
+    cpu_initialize_registers(NULL);
+}
+

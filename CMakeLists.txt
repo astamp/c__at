@@ -6,6 +6,7 @@ include_directories("include")
 
 # Main sources.
 set(SOURCES
+    src/cpu.c
     src/log.c
 )
 
