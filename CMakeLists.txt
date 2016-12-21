@@ -30,4 +30,4 @@ target_link_libraries(c__at_tests CppUTest CppUTestExt)
 
 # Enable the tests to be run via make.
 enable_testing()
-add_test(c__at_tests c__at_tests -r2)
+add_test(c__at_tests c__at_tests -r2 -c -v)
