@@ -59,3 +59,84 @@ TEST(Registers_tTests, dx_linked_to_dh_dl)
     regs.DL = 0x34;
     LONGS_EQUAL(0x1234, regs.DX);
 }
+
+TEST(Registers_tTests, 16_bit_overflow)
+{
+    Registers_t regs;
+    regs.AX = 0xFFFF;
+    regs.AX += 1;
+    LONGS_EQUAL(0, regs.AX);
+}
+
+TEST(Registers_tTests, 16_bit_underflow)
+{
+    Registers_t regs;
+    regs.AX = 0;
+    regs.AX -= 1;
+    LONGS_EQUAL(0xFFFF, regs.AX);
+}
+
+TEST(Registers_tTests, 8_bit_overflow_high)
+{
+    Registers_t regs;
+    regs.AX = 0;
+    regs.AH = 0xFF;
+    regs.AH += 1;
+    LONGS_EQUAL(0, regs.AH);
+    LONGS_EQUAL(0, regs.AX);
+}
+
+TEST(Registers_tTests, 8_bit_overflow_low)
+{
+    Registers_t regs;
+    regs.AX = 0;
+    regs.AL = 0xFF;
+    regs.AL += 1;
+    LONGS_EQUAL(0, regs.AL);
+    LONGS_EQUAL(0, regs.AX);
+}
+
+TEST(Registers_tTests, 8_bit_underflow_high)
+{
+    Registers_t regs;
+    regs.AX = 0;
+    regs.AH -= 1;
+    LONGS_EQUAL(0xFF, regs.AH);
+    LONGS_EQUAL(0xFF00, regs.AX);
+}
+
+TEST(Registers_tTests, 8_bit_underflow_low)
+{
+    Registers_t regs;
+    regs.AX = 0;
+    regs.AL -= 1;
+    LONGS_EQUAL(0xFF, regs.AL);
+    LONGS_EQUAL(0x00FF, regs.AX);
+}
+
+TEST(Registers_tTests, assignment_masks_to_8_bits)
+{
+    Registers_t regs;
+    regs.AX = 0;
+
+// Intentionally testing the overflow condition.
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Woverflow"
+    regs.AL = 384;
+#pragma GCC diagnostic pop
+    LONGS_EQUAL(128, regs.AL);
+    LONGS_EQUAL(0, regs.AH);
+}
+
+TEST(Registers_tTests, assignment_masks_to_16_bits)
+{
+    Registers_t regs;
+
+// Intentionally testing the overflow condition.
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Woverflow"
+    regs.AX = 115200;
+#pragma GCC diagnostic pop
+    LONGS_EQUAL(49664, regs.AX);
+}
+
