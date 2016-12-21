@@ -16,10 +16,12 @@ typedef struct {
             uint8_t DL;
             uint8_t DH;
         };
-        uint16_t AX;
-        uint16_t BX;
-        uint16_t CX;
-        uint16_t DX;
+        struct {
+            uint16_t AX;
+            uint16_t BX;
+            uint16_t CX;
+            uint16_t DX;
+        };
     };
     
     /* Index Registers */
