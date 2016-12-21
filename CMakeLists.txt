@@ -4,11 +4,30 @@ project(c__at)
 
 include_directories("include")
 
+# Main sources.
 set(SOURCES
-    main.c
     src/log.c
 )
 
-add_compile_options(-std=c99 -Wall -Wextra)
+# Be explicit about C standard (and C++ for unittest).
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++98")
 
-add_executable(c__at ${SOURCES})
+# Be obnoxious about warnings (but not pedantic).
+add_compile_options(-Wall -Wextra)
+
+# Create the standard binary.
+add_executable(c__at main.c ${SOURCES})
+
+# Test sources.
+set(UT_SOURCES
+    unittests/Registers_tTests.cpp
+)
+
+# Create the unittest binary.
+add_executable(c__at_tests utmain.cpp ${UT_SOURCES} ${SOURCES})
+target_link_libraries(c__at_tests CppUTest CppUTestExt)
+
+# Enable the tests to be run via make.
+enable_testing()
+add_test(c__at_tests c__at_tests -r2)
